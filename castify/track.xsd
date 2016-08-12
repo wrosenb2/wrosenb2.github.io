@@ -141,6 +141,7 @@
             <xs:element name="height" type="xs:positiveInteger"/>
             <xs:element name="URL" type="xs:anyURI"/>
         </xs:sequence>
+        <xs:attribute name="localID" type="xs:normalizedString" use="required"/>
     </xs:complexType>
     <xs:complexType name="Country">
         <xs:attribute name="code" type="CountryCode" use="required"/>
