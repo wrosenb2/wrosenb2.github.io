@@ -38,7 +38,7 @@
                                         <xs:element name="age" type="xs:nonNegativeInteger"/>
                                         <xs:element name="maxAge" type="xs:nonNegativeInteger"/>
                                     </xs:sequence>
-                                    <xs:attribute name="localID" type="xs:normalizedString" use="required"/>
+                                    <xs:attribute name="etag" type="xs:normalizedString" use="required"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
