@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="com.nibaru.prestart.cherry.archiveManifest"
+           targetNamespace="com.nibaru.prestart.cherry.archiveManifest"
+           elementFormDefault="unqualified">
+    <xs:complexType name="tags">
+        <xs:sequence>
+            <xs:element name="tag" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="manifest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="head" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                            <xs:element name="subtitle" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                            <xs:element name="description" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                            <xs:element name="tags" minOccurs="1" maxOccurs="1" type="tags"/>
+                        </xs:sequence>
+                        <xs:attribute name="created" type="xs:dateTime" use="required"/>
+                        <xs:attribute name="lastModified" type="xs:dateTime" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="body" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="article" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="source" minOccurs="0" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="author" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                                                    <xs:element name="website" minOccurs="0" maxOccurs="1" type="xs:anyURI"/>
+                                                    <xs:element name="comment" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                                                </xs:sequence>
+                                                <xs:attribute name="accessed" type="xs:dateTime" use="optional"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="title" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                                        <xs:element name="caption" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                                        <xs:element name="tags" minOccurs="1" maxOccurs="1" type="tags"/>
+                                        <xs:element name="media" minOccurs="1" maxOccurs="1">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="entry" minOccurs="1" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:sequence>
+                                                                <xs:element name="filename" minOccurs="1" maxOccurs="1">
+                                                                    <xs:simpleType>
+                                                                        <xs:restriction base="xs:string">
+                                                                            <xs:pattern value="[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\..+"/>
+                                                                        </xs:restriction>
+                                                                    </xs:simpleType>
+                                                                </xs:element>
+                                                                <xs:element name="specifications" minOccurs="1" maxOccurs="1" nillable="true">
+                                                                    <xs:complexType>
+                                                                        <xs:sequence>
+                                                                            <xs:element name="width" minOccurs="1" maxOccurs="1" type="xs:positiveInteger"/>
+                                                                            <xs:element name="height" minOccurs="1" maxOccurs="1" type="xs:positiveInteger"/>
+                                                                            <xs:element name="duration" minOccurs="0" maxOccurs="1" type="xs:double"/>
+                                                                        </xs:sequence>
+                                                                        <xs:attribute name="size" type="xs:nonNegativeInteger" use="required"/>
+                                                                    </xs:complexType>
+                                                                </xs:element>
+                                                                <xs:element name="caption" minOccurs="0" maxOccurs="1" type="xs:string"/>
+                                                            </xs:sequence>
+                                                            <xs:attribute name="type" use="required">
+                                                                <xs:simpleType>
+                                                                    <xs:restriction base="xs:string">
+                                                                        <xs:enumeration value="image"/>
+                                                                        <xs:enumeration value="gif"/>
+                                                                        <xs:enumeration value="video"/>
+                                                                        <xs:enumeration value="unknown"/>
+                                                                    </xs:restriction>
+                                                                </xs:simpleType>
+                                                            </xs:attribute>
+                                                            <xs:attribute name="index" type="xs:nonNegativeInteger" use="required"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="passwordHash" use="optional">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:pattern value="[0-9a-f]{64}"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" fixed="1.0" use="required" type="xs:float"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
