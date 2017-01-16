@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="com.nibaru.cherry.archive.passcheck"
+           targetNamespace="com.nibaru.cherry.archive.passcheck"
+           elementFormDefault="unqualified">
+    <xs:simpleType name="Bin128">
+        <xs:restriction base="xs:hexBinary">
+            <xs:length value="32"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Bin256">
+        <xs:restriction base="xs:hexBinary">
+            <xs:length value="64"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="passcheck">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="detail" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="salt" minOccurs="1" maxOccurs="1" type="Bin128"/>
+                            <xs:element name="vector" minOccurs="0" maxOccurs="1" type="Bin128"/>
+                            <xs:element name="plainhash" minOccurs="1" maxOccurs="1" type="Bin256"/>
+                        </xs:sequence>
+                        <xs:attribute name="iterations" type="xs:positiveInteger" use="optional" default="300000"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="plaintext" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:base64Binary">
+                                <xs:attribute name="checksum" type="Bin256" use="required"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:normalizedString" use="required" fixed="1.0"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+            
