@@ -28,7 +28,7 @@
                 <xs:element name="vector" minOccurs="1" maxOccurs="1" type="DataCheck"/>
             </xs:sequence>
             <xs:attribute name="version" type="xs:normalizedString" use="required" fixed="1.0"/>
-            <xs:attribute name="iterations" type="xs:nonNegativeInteger" use="optional" default="1"/>
+            <xs:attribute name="rounds" type="xs:nonNegativeInteger" use="optional" default="1"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
