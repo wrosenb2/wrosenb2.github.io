@@ -26,7 +26,7 @@
                         <xs:attribute name="iterations" type="xs:positiveInteger" use="optional" default="300000"/>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="ciphertext" minOccurs="1" maxOccurs="1">
+                <xs:element name="cipher" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:base64Binary">
