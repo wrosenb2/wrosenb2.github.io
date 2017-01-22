@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="com.nibaru.cherry.archive.dummykey"
+           targetNamespace="com.nibaru.cherry.archive.dummykey"
+           elementFormDefault="unqualified">
+    <xs:complexType name="DataCheck">
+        <xs:sequence>
+            <xs:element name="data" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:hexBinary">
+                        <xs:length value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="checksum" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:hexBinary">
+                        <xs:length value="32"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="dummykey">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="key" minOccurs="1" maxOccurs="1" type="DataCheck"/>
+                <xs:element name="vector" minOccurs="1" maxOccurs="1" type="DataCheck"/>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:normalizedString" use="required" fixed="1.0"/>
+            <xs:attribute name="iterations" type="xs:nonNegativeInteger" use="optional" default="1"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+            
