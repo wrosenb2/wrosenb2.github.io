@@ -37,9 +37,10 @@
                                         <xs:element name="height" type="xs:positiveInteger" nillable="true"/>
                                         <xs:element name="scale" type="xs:positiveInteger" nillable="true"/>
                                     </xs:sequence>
-                                    <xs:attribute name="fitting" use="optional" default="distort">
+                                    <xs:attribute name="fitting" use="optional" default="preserve">
                                         <xs:simpleType>
                                             <xs:restriction base="xs:token">
+                                                <xs:enumeration value="preserve"/>
                                                 <xs:enumeration value="horizontal"/>
                                                 <xs:enumeration value="vertical"/>
                                                 <xs:enumeration value="distort"/>
