@@ -1,71 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="https://wrosenb2.github.io/svg_icons/schemas/export.xsd"
-           targetNamespace="https://wrosenb2.github.io/svg_icons/schemas/export.xsd"
+<xs:schema xmlns="local://com.williamrosenbloom.svg.export.xsd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="local://com.williamrosenbloom.svg.export.xsd"
            elementFormDefault="qualified">
-    <xs:element name="export">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="head">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="background">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="red" type="ColorComponent"/>
-                                        <xs:element name="green" type="ColorComponent"/>
-                                        <xs:element name="blue" type="ColorComponent"/>
-                                        <xs:element name="alpha" type="ColorComponent"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="title" type="xs:normalizedString" nillable="true"/>
-                            <xs:element name="author" type="xs:normalizedString" nillable="true"/>
-                            <xs:element name="description" type="xs:string" nillable="true"/>
-                            <xs:element name="copyright" type="xs:string" nillable="true"/>
-                        </xs:sequence>
-                        <xs:attribute name="interlace" type="Boolean" use="required" default="yes"/>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="specs">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="specification" minOccurs="0" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="width" type="xs:positiveInteger" nillable="true"/>
-                                        <xs:element name="height" type="xs:positiveInteger" nillable="true"/>
-                                        <xs:element name="scale" type="xs:positiveInteger" nillable="true"/>
-                                    </xs:sequence>
-                                    <xs:attribute name="fitting" use="optional" default="preserve">
-                                        <xs:simpleType>
-                                            <xs:restriction base="xs:token">
-                                                <xs:enumeration value="preserve"/>
-                                                <xs:enumeration value="horizontal"/>
-                                                <xs:enumeration value="vertical"/>
-                                                <xs:enumeration value="distort"/>
-                                            </xs:restriction>
-                                        </xs:simpleType>
-                                    </xs:attribute>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
+    <xs:element name="export" type="ExportElement">
+        <xs:key name="topLevelName">
+            <xs:selector xpath="body/*"/>
+            <xs:field xpath="@filename"/>
+        </xs:key>
     </xs:element>
-    <xs:simpleType name="Boolean">
-        <xs:restriction base="xs:token">
-            <xs:enumeration value="yes"/>
-            <xs:enumeration value="no"/>
+    <xs:complexType name="ExportElement">
+        <xs:sequence>
+            <xs:element name="head">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="compression" type="UnitElement"/>
+                        <xs:element name="gamma" type="UnitElement"/>
+                        <xs:element name="scaling">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="none"/>
+                                    <xs:enumeration value="down"/>
+                                    <xs:enumeration value="up-or-down"/>
+                                    <xs:enumeration value="independently"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="background">
+                            <xs:complexType>
+                                <xs:attribute name="red" use="required" type="UnitScale"/>
+                                <xs:attribute name="green" use="required" type="UnitScale"/>
+                                <xs:attribute name="blue" use="required" type="UnitScale"/>
+                                <xs:attribute name="force-bkg" use="optional" type="xs:boolean" default="false"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="interlace" type="xs:boolean"/>
+                        <xs:element name="progressive" type="xs:boolean"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="body">
+                <xs:complexType>
+                    <xs:group ref="Contents" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="UnitScale">
+        <xs:restriction base="xs:double">
+            <xs:maxInclusive value="1.0"/>
+            <xs:minInclusive value="0.0"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="ColorComponent">
-        <xs:restriction base="xs:float">
-            <xs:minInclusive value="0"/>
-            <xs:maxInclusive value="1"/>
-        </xs:restriction>
-    </xs:simpleType>
+    <xs:complexType name="UnitElement">
+        <xs:attribute name="value" type="UnitScale" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Image">
+        <xs:sequence>
+            <xs:element name="type">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="jpeg"/>
+                        <xs:enumeration value="png"/>
+                        <xs:enumeration value="bmp"/>
+                        <xs:enumeration value="jpeg2000"/>
+                        <xs:enumeration value="pdf"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="width" type="xs:nonNegativeInteger"/>
+            <xs:element name="height" type="xs:nonNegativeInteger"/>
+            <xs:element name="resolution" nillable="true">
+                <xs:simpleType>
+                    <xs:restriction base="xs:double">
+                        <xs:minInclusive value="0.0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="filename" type="xs:token" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="Container">
+        <xs:sequence>
+            <xs:element name="type">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="directory"/>
+                        <xs:enumeration value="tiff"/>
+                        <xs:enumeration value="ico"/>
+                        <xs:enumeration value="icns"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="image" maxOccurs="unbounded" type="Image"/>
+        </xs:sequence>
+        <xs:attribute name="filename" type="xs:token" use="required"/>
+    </xs:complexType>
+    <xs:group name="Contents">
+        <xs:choice>
+            <xs:element name="image" type="Image"/>
+            <xs:element name="container" type="Container">
+                <xs:key name="withinContainerKey">
+                    <xs:selector xpath="image"/>
+                    <xs:field xpath="@filename"/>
+                </xs:key>
+            </xs:element>
+        </xs:choice>
+    </xs:group>
 </xs:schema>
-            
