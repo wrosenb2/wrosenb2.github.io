@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="xmlns://com.williamrosenbloom.svg/10/schemas/export"
+           targetNamespace="xmlns://com.williamrosenbloom.svg/10/schemas/export"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="number.xsd"/>
+    <xs:include schemaLocation="pngprops.xsd"/>
+    <xs:include schemaLocation="color.xsd"/>
+    <xs:include schemaLocation="scaling.xsd"/>
+    <xs:include schemaLocation="orientation.xsd"/>
+    <xs:include schemaLocation="alignment.xsd"/>
+    <xs:include schemaLocation="geometry.xsd"/>
+    <xs:include schemaLocation="gifprops.xsd"/>
+    <xs:complexType name="ImageProperties">
+        <xs:all>
+            <xs:element name="transparent">
+                <xs:complexType>
+                    <xs:attribute name="force" use="required">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:token">
+                                <xs:enumeration value="white"/>
+                                <xs:enumeration value="black"/>
+                                <xs:enumeration value="none"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="background" type="RGBOpaqueColor"/>
+            <xs:element name="alpha">
+                <xs:complexType>
+                    <xs:attribute name="allow" type="xs:boolean" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="base-dpi" type="Dimensions"/>
+            <xs:element name="orientation" type="ImageOrientation"/>
+            <xs:element name="scaling">
+                <xs:complexType>
+                    <xs:attribute name="rule" type="ScaleRule" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="alignment">
+                <xs:complexType>
+                    <xs:attribute name="value" type="ImageAlignment" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="encoding">
+                <xs:complexType>
+                    <xs:attribute name="type" use="required">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:token">
+                                <xs:enumeration value="integer"/>
+                                <xs:enumeration value="float"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="jpeg">
+                <xs:complexType>
+                    <xs:attribute name="progressive" type="xs:boolean" use="optional" default="false"/>
+                    <xs:attribute name="compression" type="UnitDouble" use="optional" default="1.0"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="png" type="PNGProperties"/>
+            <xs:element name="gif" type="GIFProperties"/>
+        </xs:all>
+    </xs:complexType>
+</xs:schema>

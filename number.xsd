@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="xmlns://com.williamrosenbloom.svg/10/schemas/export"
+    targetNamespace="xmlns://com.williamrosenbloom.svg/10/schemas/export"
+    elementFormDefault="qualified">
+    <xs:simpleType name="MaxableInteger">
+        <xs:union memberTypes="xs:positiveInteger">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="infinity"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="PositiveDouble">
+        <xs:restriction base="xs:double">
+            <xs:minExclusive value="0.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NativeDouble">
+        <xs:union memberTypes="PositiveDouble">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="inherit"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="NonNegativeDouble">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UnitDouble">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NaturalDouble">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

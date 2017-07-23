@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="xmlns://com.williamrosenbloom.svg/10/schemas/export"
+           targetNamespace="xmlns://com.williamrosenbloom.svg/10/schemas/export"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="properties.xsd"/>
+    <xs:include schemaLocation="format.xsd"/>
+    <xs:complexType name="BitmapImage">
+        <xs:complexContent>
+            <xs:extension base="ImageProperties">
+                <xs:attribute name="scale" type="NativeDouble" use="optional" default="inherit"/>
+                <xs:attribute name="width" type="NativeDouble" use="optional" default="inherit"/>
+                <xs:attribute name="height" type="NativeDouble" use="optional" default="inherit"/>
+                <xs:attribute name="time" type="NonNegativeDouble" use="optional" default="0.0"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="TypedBitmap">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="BitmapImage">
+                    <xs:attribute name="format" type="ImageFormat" use="optional" default="public.png"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
