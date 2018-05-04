@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="mediatype.xsd"/>
+    <xs:include schemaLocation="strings.xsd"/>
+    <!--
+        code => CHAR(22) NOT NULL
+        filename => VARCHAR(255) NOT NULL
+        mime => CHAR(4) NOT NULL
+        label => VARCHAR(255)
+        rel => ENUM('vtt','ttml') NOT NULL
+        default => BOOL
+        lang => VARCHAR(16)
+        PRIMARY KEY(code)
+    -->
+    <xs:complexType name="WebTrack">
+        <xs:sequence>
+            <xs:element name="code" type="RandomID"/>
+            <xs:element name="file">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="Token255">
+                            <xs:attribute name="mime" type="TextTrackType" use="required"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="label" type="String255" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="rel" type="TrackRelationship" use="required"/>
+        <xs:attribute name="default" type="xs:boolean" use="optional" default="false"/>
+        <xs:attribute name="lang" type="xs:language" use="optional" default="en-US"/>
+    </xs:complexType>
+    <xs:complexType name="TrackList">
+        <xs:sequence>
+            <xs:element name="track" type="WebTrack" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+            
