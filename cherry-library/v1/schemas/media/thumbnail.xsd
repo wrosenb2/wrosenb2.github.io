@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="mediatype.xsd"/>
+    <xs:include schemaLocation="strings.xsd"/>
+    <xs:include schemaLocation="numbers.xsd"/>
+    <!--
+        code => CHAR(22) NOT NULL
+        width/height => MEDIUMINT NOT NULL
+        mime => ENUM('image/jpeg','image/bmp','image/gif','image/png','image/svg+xml','image/x-icon') NOT NULL
+        PRIMARY KEY(code)
+
+        CREATE TABLE global_images (
+            code CHAR(22) NOT NULL,
+            width MEDIUMINT NOT NULL,
+            height MEDIUMINT NOT NULL,
+            mime ENUM('image/jpeg','image/bmp','image/gif','image/png','image/svg+xml','image/x-icon') NOT NULL,
+            PRIMARY KEY(code)
+        );
+    -->
+    <xs:complexType name="Thumbnail">
+        <xs:sequence>
+            <xs:element name="mime" type="ImageMIME"/>
+            <xs:element name="code" type="RandomID"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="Dimensions"/>
+    </xs:complexType>
+</xs:schema>
+            

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           elementFormDefault="qualified">
+    <xs:simpleType name="String255">
+        <xs:restriction base="xs:normalizedString">
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Token16">
+        <xs:restriction base="xs:token">
+            <xs:maxLength value="16"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Token255">
+        <xs:restriction base="xs:token">
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="HexMD5">
+        <xs:restriction base="xs:hexBinary">
+            <xs:length value="16"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RGB8">
+        <xs:restriction base="xs:token">
+            <xs:pattern value="#[0-9a-fA-F]{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RandomID">
+        <xs:restriction base="xs:hexBinary">
+            <xs:length value="22"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+            

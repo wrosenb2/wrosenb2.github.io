@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           elementFormDefault="qualified">
+    <xs:simpleType name="MediaType">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="pdf"/>
+            <xs:enumeration value="txt"/>
+            <xs:enumeration value="mp4"/>
+            <xs:enumeration value="webm"/>
+            <xs:enumeration value="video_ogg"/>
+            <xs:enumeration value="mp3"/>
+            <xs:enumeration value="wave"/>
+            <xs:enumeration value="audio_ogg"/>
+            <xs:enumeration value="jpeg"/>
+            <xs:enumeration value="bmp"/>
+            <xs:enumeration value="gif"/>
+            <xs:enumeration value="png"/>
+            <xs:enumeration value="svg"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TextTrackType">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="vtt"/>
+            <xs:enumeration value="ttml"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TrackRelationship">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="captions"/>
+            <xs:enumeration value="chapters"/>
+            <xs:enumeration value="descriptions"/>
+            <xs:enumeration value="metadata"/>
+            <xs:enumeration value="subtitles"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ImageMIME">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="image/jpeg"/>
+            <xs:enumeration value="image/bmp"/>
+            <xs:enumeration value="image/gif"/>
+            <xs:enumeration value="image/png"/>
+            <xs:enumeration value="image/svg+xml"/>
+            <xs:enumeration value="image/x-icon"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+            

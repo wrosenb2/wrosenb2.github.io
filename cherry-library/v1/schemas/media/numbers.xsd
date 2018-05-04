@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           elementFormDefault="qualified">
+    <xs:simpleType name="UnitDouble">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attributeGroup name="Dimensions">
+        <xs:attribute name="width" type="xs:positiveInteger" use="required"/>
+        <xs:attribute name="height" type="xs:positiveInteger" use="required"/>
+    </xs:attributeGroup>
+</xs:schema>
+            

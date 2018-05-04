@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="numbers.xsd"/>
+    <xs:include schemaLocation="mediatype.xsd"/>
+    <xs:include schemaLocation="thumbnail.xsd"/>
+    <xs:include schemaLocation="strings.xsd"/>
+    <!--
+        code => CHAR(22) NOT NULL
+        mediatype => ENUM('pdf','txt','mp4','webm','video_ogg','mp3','wave','audio_ogg','jpeg','bmp','gif','png','svg')
+        title/subtitle => VARCHAR(255)
+        icon => CHAR(22)
+        keywords => TEXT with regex "([\w\-.]{1,16},)+"
+        fav => BOOL
+        rating => DOUBLE
+        likes => INT
+        views => INT
+    -->
+    <xs:element name="gallery">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="code" type="RandomID"/>
+                <xs:element name="media" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="code" type="RandomID"/>
+                            <xs:all>
+                                <xs:element name="title" type="String255"/>
+                                <xs:element name="subtitle" type="String255"/>
+                                <xs:element name="icon" type="Thumbnail"/>
+                                <xs:element name="keywords">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="word" maxOccurs="unbounded">
+                                                <xs:simpleType>
+                                                    <xs:restriction base="xs:token">
+                                                        <xs:pattern value="[\w\-.]{1,16}"/>
+                                                    </xs:restriction>
+                                                </xs:simpleType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:all>
+                        </xs:sequence>
+                        <xs:attribute name="type" type="MediaType" use="required"/>
+                        <xs:attribute name="fav" type="xs:boolean" use="optional" default="false"/>
+                        <xs:attribute name="rating" type="UnitDouble" use="optional" default="0.0"/>
+                        <xs:attribute name="likes" type="xs:positiveInteger" use="optional" default="0"/>
+                        <xs:attribute name="views" type="xs:positiveInteger" use="optional" default="0"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+            

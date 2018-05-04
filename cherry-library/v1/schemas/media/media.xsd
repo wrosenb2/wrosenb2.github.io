@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/media/"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="mediatype.xsd"/>
+    <xs:include schemaLocation="numbers.xsd"/>
+    <xs:include schemaLocation="strings.xsd"/>
+    <xs:include schemaLocation="thumbnail.xsd"/>
+    <xs:include schemaLocation="track.xsd"/>
+    <xs:include schemaLocation="richtext.xsd"/>
+    <!--
+        code => CHAR(22)
+        disposition => VARCHAR(255)
+        mediatype => ENUM('pdf','txt','mp4','webm','video_ogg','mp3','wave','audio_ogg','jpeg','bmp','gif','png','svg')
+        md5 => BINARY(16)
+        length => INT
+        duration => BIGINT
+        width/height => MEDIUMINT
+        lang => VARCHAR(16)
+
+        artist => VARCHAR(255)
+        year => YEAR
+        genre => VARCHAR(255)
+        text => text sub-table
+        copyright => VARCHAR(255)
+        caption => CHAR(22) rich text id code
+        background => CHAR(7)
+        poster => CHAR(22) image id code
+        thumbnail => CHAR(22) image id code
+        volume => DOUBLE
+        mute => BOOL
+        srcnam => VARCHAR(255)
+        srcdsc => VARCHAR(255)
+        srcurl => TEXT
+    -->
+    <xs:element name="media">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="head">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="code" type="RandomID"/>
+                            <xs:element name="disposition">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="Token255">
+                                            <xs:attribute name="type" type="MediaType" use="required"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="checksum">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="HexMD5">
+                                            <xs:attribute name="len" type="xs:positiveInteger" use="required"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="duration" type="xs:duration"/>
+                        </xs:sequence>
+                        <xs:attributeGroup ref="Dimensions"/>
+                        <xs:attribute name="lang" type="xs:language" use="optional" default="en-US"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="body">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="artist" type="String255"/>
+                            <xs:element name="year" type="xs:unsignedShort"/>
+                            <xs:element name="genre" type="Token255"/>
+                            <xs:element name="text" type="TrackList">
+                                <xs:unique name="WebTrackCodeUnique">
+                                    <xs:selector xpath="child::code"/>
+                                    <xs:field xpath="."/>
+                                </xs:unique>
+                            </xs:element>
+                            <xs:element name="copyright" type="String255"/>
+                            <xs:element name="caption" type="RichText"/>
+                            <xs:element name="background" type="RGB8"/>
+                            <xs:element name="poster" type="Thumbnail"/>
+                            <xs:element name="thumbnail" type="Thumbnail"/>
+                            <xs:element name="volume">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="UnitDouble">
+                                            <xs:attribute name="mute" type="xs:boolean" use="optional" default="false"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="source">
+                                <xs:complexType>
+                                    <xs:all>
+                                        <xs:element name="name" type="String255"/>
+                                        <xs:element name="desc" type="String255"/>
+                                    </xs:all>
+                                    <xs:attribute name="href" type="xs:anyURI" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+            
