@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="UUID.xsd"/>
+    <xs:include schemaLocation="number.xsd"/>
+    <xs:complexType name="IconImage">
+        <xs:sequence>
+            <xs:element name="mime" type="ImageMIME"/>
+            <xs:element name="code" type="RandomID"/>
+        </xs:sequence>
+        <xs:attribute name="width" type="xs:positiveInteger" use="required"/>
+        <xs:attribute name="height" type="xs:positiveInteger" use="required"/>
+    </xs:complexType>
+</xs:schema>
+            

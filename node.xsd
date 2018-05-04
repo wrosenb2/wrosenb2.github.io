@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+    targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+    elementFormDefault="qualified">
+    <xs:include schemaLocation="number.xsd"/>
+    <xs:include schemaLocation="UUID.xsd"/>
+    <xs:include schemaLocation="richtext.xsd"/>
+    <xs:include schemaLocation="strlen.xsd"/>
+    <xs:include schemaLocation="keywords.xsd"/>
+    <xs:include schemaLocation="comments.xsd"/>
+    <xs:include schemaLocation="icon.xsd"/>
+    <!--
+        code => CHAR(22) NOT NULL
+        owner => BINARY(16) NOT NULL
+        created => TIMESTAMP NOT NULL
+        modified => TIMESTAMP NOT NULL
+        node_type => ENUM('library','folder','gallery','media') NOT NULL
+
+        title => VARCHAR(255)
+        subtitle => VARCHAR(255)
+        desc => CHAR(22) link to rich text table
+        icon => CHAR(22) link to image table
+        tags => stored as a separate tags table
+        comments => stored as a separate comments table
+        rating => DOUBLE
+        views => INT
+        likes => INT
+        fav => BOOL
+    -->
+    <xs:element name="node">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="head">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="code" type="RandomID"/>
+                            <xs:element name="owner" type="UUID"/>
+                            <xs:element name="created" type="xs:dateTime"/>
+                            <xs:element name="modified" type="xs:dateTime"/>
+                        </xs:sequence>
+                        <xs:attribute name="type" type="NodeType" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="body">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="title" type="String255"/>
+                            <xs:element name="subtitle" type="String255"/>
+                            <xs:element name="desc" type="RichText"/>
+                            <xs:element name="icon" type="IconImage"/>
+                            <xs:element name="keywords" type="KeywordList">
+                                <xs:unique name="KeyWordUnique">
+                                    <xs:selector xpath="child::tag"/>
+                                    <xs:field xpath="@code"/>
+                                </xs:unique>
+                            </xs:element>
+                            <xs:element name="comments" type="CommentList">
+                                <xs:unique name="CommentCodeUnique">
+                                    <xs:selector xpath="child::post"/>
+                                    <xs:field xpath="@code"/>
+                                </xs:unique>
+                            </xs:element>
+                        </xs:all>
+                        <xs:attribute name="rating" type="UnitDouble" use="optional" default="0.0"/>
+                        <xs:attribute name="views" type="xs:nonNegativeInteger" use="optional" default="0"/>
+                        <xs:attribute name="likes" type="xs:nonNegativeInteger" use="optional" default="0"/>
+                        <xs:attribute name="fav" type="xs:boolean" use="optional" default="false"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string" use="required" fixed="1.0"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

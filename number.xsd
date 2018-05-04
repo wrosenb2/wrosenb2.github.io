@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           elementFormDefault="qualified">
+    <xs:simpleType name="UnitDouble">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ImageMIME">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="image/jpeg"/>
+            <xs:enumeration value="image/bmp"/>
+            <xs:enumeration value="image/gif"/>
+            <xs:enumeration value="image/png"/>
+            <xs:enumeration value="image/svg+xml"/>
+            <xs:enumeration value="image/x-icon"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NodeType">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="library"/>
+            <xs:enumeration value="folder"/>
+            <xs:enumeration value="gallery"/>
+            <xs:enumeration value="mediaitem"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+            

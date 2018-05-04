@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           elementFormDefault="qualified">
+    <xs:simpleType name="String255">
+        <xs:restriction base="xs:normalizedString">
+            <xs:maxLength value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Token16">
+        <xs:restriction base="xs:token">
+            <xs:maxLength value="16"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+            

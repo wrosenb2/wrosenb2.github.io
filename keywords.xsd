@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="UUID.xsd"/>
+    <xs:include schemaLocation="strlen.xsd"/>
+    <!--
+        word => VARCHAR(16) NOT NULL
+        description => VARCHAR(255)
+    -->
+    <xs:complexType name="KeywordTag">
+        <xs:simpleContent>
+            <xs:extension base="String255">
+                <xs:attribute name="code" type="RandomID" use="required"/>
+                <xs:attribute name="word">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                            <xs:pattern value="[\w\-.]{1,16}"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="KeywordList">
+        <xs:sequence>
+            <xs:element name="tag" type="KeywordList" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+            

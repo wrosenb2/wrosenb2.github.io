@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+    targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+    elementFormDefault="qualified">
+    <xs:include schemaLocation="UUID.xsd"/>
+    <xs:complexType name="RichText">
+        <xs:sequence>
+            <xs:element name="code" type="RandomID"/>
+            <xs:element name="content">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="type" use="optional" default="plain">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="plain"/>
+                                        <xs:enumeration value="markdown"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

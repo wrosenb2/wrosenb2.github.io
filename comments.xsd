@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           targetNamespace="http://com.williamrosenbloom/cherry/v1/schemas/node/"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="UUID.xsd"/>
+    <xs:include schemaLocation="strlen.xsd"/>
+    <xs:include schemaLocation="richtext.xsd"/>
+    <xs:complexType name="Comment">
+        <xs:complexContent>
+            <xs:extension base="RichText">
+                <xs:attribute name="time" type="xs:dateTime" use="required"/>
+                <xs:attribute name="author" type="String255" use="optional"/>
+                <xs:attribute name="code" type="RandomID" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CommentList">
+        <xs:sequence>
+            <xs:element name="post" type="Comment" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+            
