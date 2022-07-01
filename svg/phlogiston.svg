@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version="1.1" width="1000" height="1000">
+
+    <rect fill="#362C5D" width="1000" height="1000"/>
+
+    <!--
+    width is 300
+    height is width / 2 / tan(pi/10) = 461.6525305762881
+    hypotenuse is 300 * PHI = 485.4101966249685
+    top radius is hypotenuse / (2 + PHI) = 134.16407864998737
+    bottom radius is width / (2 + PHI) = 82.91796067500631
+    bottom inner radius is bottom radius / PHI = 51.246117974981075
+    bottom stroke thickness is 31.671842700025238
+    -->
+
+    <g stroke="black" stroke-width="31.7" fill="none">
+        <polyline points="350,730.8 500,269.2 650,730.8"/>
+        <circle cx="500" cy="350" r="190"/>
+        <g fill="white">
+            <circle cx="350" cy="730.8" r="51.2"/>
+            <circle cx="650" cy="730.8" r="51.2"/>
+        </g>
+    </g>
+
+
+
+</svg>
